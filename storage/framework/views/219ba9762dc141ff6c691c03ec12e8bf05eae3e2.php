@@ -1,0 +1,1 @@
+<?php /**PATH C:\Users\ASUS\Desktop\Final Project\LaravelApp\resources\views/registration/university.blade.php ENDPATH**/ ?>
