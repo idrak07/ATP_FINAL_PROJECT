@@ -157,6 +157,20 @@
             <tr>
                 <td colspan="2">
                     <center>
+                    <a href="<?php echo e(route('student.updatepicture')); ?>">Change Picture</a>
+                    </center>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <center>
+                    <a href="<?php echo e(route('student.updatecv')); ?>">Upload CV</a>
+                    </center>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <center>
                         <a href="<?php echo e(route('student.updatepassword')); ?>">Update Password</a>
                     </center>
                 </td>

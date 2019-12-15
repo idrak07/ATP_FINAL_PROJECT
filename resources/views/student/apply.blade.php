@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Update Profile</title>
+    <title>Apply</title>
     <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>-->
     <script src=""></script>
     <style>
@@ -42,49 +42,41 @@
         </div>
 
 <fieldset>
-    <legend>Update Password</legend>
+    <legend></legend>
     <center>
         <form method="post" enctype="multipart/form-data">
             {{csrf_field()}}
-            <table>
-                
+            <table border="2" width="400">
                 <tr>
-                    <td>Current Password:</td>
-                    <td><input id = "pass" type="password" name="currentpassword"></td>
-                    <td>{{ $errors->first('password') }}</td>
+                    <td>
+                        Your Introduction: 
+                    </td>
+                    <td>
+                        <textarea name="intro" placeholder="Your Introduction" value="{{old('intro')}}"></textarea>
+                    </td>
+                    <td>{{ $errors->first('intro') }}</td>
                 </tr>
+                <tr>
+                    <td>
+                        Purpose: 
+                    </td>
+                    <td>
+                        <textarea name="purpose" placeholder="Purpose in short" value="{{old('purpose')}}"></textarea>
+                    </td>
+                    <td>{{ $errors->first('purpose') }}</td>
 
-                <tr>
-                    <td>New Password:</td>
-                    <td><input id = "pass" type="password" name="password"></td>
-                    <td>{{ $errors->first('password') }}</td>
-                </tr>
-                <tr>
-                    <td>Confirm New Password:</td>
-                    <td><input id = "repass" type="password" name="confirmpassword"></td>
-                    <td>{{ $errors->first('confirmpassword') }}</td>
                 </tr>
                 <tr>
                     <td colspan="2">
                         <center>
-                            <input type="submit" name="submit" value="Confirm Update">
+                            <input type="submit" name="submit" value="Confirm Apply"/>
                         </center>
                     </td>
+                   
                 </tr>
-                <tr>
-                        <td colspan="2">
-                            <center>
-                            <a href="{{route('student.profile')}}">Back</a>
-                             </center>
-                        </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                            <center>
-                                {{session('msg')}}
-                             </center>
-                    </td>
-                </tr>
+                        
+                
+        
             </table>
             </form>
     </center>

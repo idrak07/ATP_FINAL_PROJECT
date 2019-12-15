@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <title>
-       Student Index
+       Applications
     </title>
     <style>
         .topnav {
@@ -35,39 +35,30 @@
         <div class="topnav">
         <a class="active" href="<?php echo e(route('student.index')); ?>">Home</a>
             <a href="<?php echo e(route('student.profile')); ?>"><?php echo e(session('name')); ?></a>
-        <a href="<?php echo e(route('student.applications')); ?>">Your Applications</a>
+            <a href="<?php echo e(route('student.applications')); ?>">Your Applications</a>
             <a href="">B</a>
             <a href="<?php echo e(route('logout')); ?>">Log Out</a>
         </div>
         <div class="posts">
-            <center>
-                <table border="2" width="400">
-                    <?php $__currentLoopData = $offers; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $offer): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <center><table border="2" width="400">
+                   <<?php $__currentLoopData = $applications; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $application): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
                             <td colspan="2">
                                 <h3>
-                                    <center><?php echo e($offer->title); ?></center>
+                                    <center><?php echo e($application->title); ?></center>
                                 </h3>
                             </td>
                         </tr>
-                        <tr aria-rowspan="4">
-                            <td>
-                                <?php echo e($offer->description); ?>
-
-                            </td>
-                        </tr>
+                        
                         <tr>
-                            <td colspan="2">
-                                <b>
-                                    <center>
-                                        <a href="<?php echo e(route('student.apply', $offer->id)); ?>">Apply</a>
-                                    </center>
-                                </b>
-                            </td>
+                            <td colspan="2"> 
+                                -                       ---                         -
+                            <td>
+                            
                         </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </table>
             </center>
         </div>
     </body>
-</html><?php /**PATH C:\Users\ASUS\Desktop\Final Project\LaravelApp\resources\views/student/index.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\Users\ASUS\Desktop\Final Project\LaravelApp\resources\views/student/applications.blade.php ENDPATH**/ ?>

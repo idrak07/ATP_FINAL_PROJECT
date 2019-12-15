@@ -145,6 +145,20 @@
             <tr>
                 <td colspan="2">
                     <center>
+                    <a href="{{route('student.updatepicture')}}">Change Picture</a>
+                    </center>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <center>
+                    <a href="{{route('student.updatecv')}}">Upload CV</a>
+                    </center>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <center>
                         <a href="{{route('student.updatepassword')}}">Update Password</a>
                     </center>
                 </td>
