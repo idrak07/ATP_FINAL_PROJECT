@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    //to check user already logged in or not
-});
-
 Route::get('/login','LoginController@index')->name('login.index');
 Route::post('/login','LoginController@verify');
 
@@ -23,12 +19,10 @@ Route::get('/logout','LogoutController@index')->name('logout');
 Route::get('/registration','RegistrationController@index')->name('registration.index');
 Route::get('/registration/student','RegistrationController@student')->name('registration.student');
 Route::get('/registration/university','RegistrationController@university')->name('registration.university');
-Route::get('/registration/org','RegistrationController@org')->name('registration.org');
-
+Route::get('/registration/organization','RegistrationController@organization')->name('registration.organization');
 Route::post('/registration/student','RegistrationController@insertStudent');
 Route::post('/registration/university','RegistrationController@insertUniversity');
-Route::post('/registration/org','RegistrationController@insertOrg');
-
+Route::post('/registration/organization','RegistrationController@insertOrganization');
 Route::group(['middleware'=>['session']], function(){
 
     Route::group(['middleware'=>['verifyadmin']], function(){
@@ -37,18 +31,34 @@ Route::group(['middleware'=>['session']], function(){
 
     Route::group(['middleware'=>['verifystudent']], function(){
         Route::get('/student','StudentController@index')->name('student.index');
-        Route::get('/student/profile','StudentController@profile')->name('student.profile');
-        Route::get('/student/update/profile','StudentController@editProfile')->name('student.editprofile');
-        Route::post('/student/update/profile','StudentController@updateProfile');
-        Route::get('/student/update/password','StudentController@editPassword')->name('student.updatepassword');
-        Route::post('/student/update/password','StudentController@updatePassword');
+       
        });
 
     Route::group(['middleware'=>['verifyuniversity']], function(){
         Route::get('/university','UniversityController@index')->name('university.index');
      });
-    Route::group(['middleware'=>['verifyorg']], function(){
-       Route::get('/government','GovernmentController@index')->name('government.index');
+    Route::group(['middleware'=>['verifyorganization']], function(){
+       Route::get('/organization','OrganizationController@index')->name('organization.index');
+       Route::get('/organization/profile','OrganizationController@profile')->name('organization.profile');
+      //profile upadate 
+       Route::get('/organization/update/profile/personal','OrganizationController@editpersonal')->name('organization.personal');
+       Route::post('/organization/update/profile/personal','OrganizationController@updatepersonal');
+       Route::get('/organization/update/profile/address','OrganizationController@editaddress')->name('organization.address');
+       Route::post('/organization/update/profile/address','OrganizationController@updateaddress');
+       Route::get('/organization/update/profile/attachment','OrganizationController@editattachment')->name('organization.attachment');
+       Route::post('/organization/update/profile/attachment','OrganizationController@updateattachment');
+       Route::get('/organization/update/profile/check','OrganizationController@editpassword')->name('organization.password');
+       Route::post('/organization/update/profile/check','OrganizationController@currentpassword');
+       Route::get('/organization/update/profile/newpassword','OrganizationController@confirmpassword')->name('organization.confirm');
+       Route::post('/organization/update/profile/newpassword','OrganizationController@confirmpasswordpost');
+       //massageshow
+       Route::get('/organization/update/profile/massage','OrganizationController@massage')->name('organization.massage');
+       Route::post('/organization/update/profile/massage','OrganizationController@massagebackprofile');
+
+       Route::get('/organization/profile','OrganizationController@profile')->name('organization.profile');
+
+
     });
 });
+
 
