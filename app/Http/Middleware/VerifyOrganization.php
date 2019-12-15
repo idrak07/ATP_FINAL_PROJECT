@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class VerifySession
+class VerifyOrganization
 {
     /**
      * Handle an incoming request.
@@ -15,11 +15,6 @@ class VerifySession
      */
     public function handle($request, Closure $next)
     {
-        if($request->session()->has('username')){
-            return $next($request);
-        }else{
-            return redirect()->route('login.index');
-        }
-    
+        return $next($request);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Http\Requests\OrganizationRequest;
 use Illuminate\Http\Request;
+use App\Organization;
 use App\User;
-use App\Student;
 
 class RegistrationController extends Controller
 {
@@ -17,8 +17,8 @@ class RegistrationController extends Controller
     function university(){
         return view('registration.university');
     }
-    function org(){
-        return view('registration.org');
+    function organization(){
+        return view('registration.organization');
     }
     function insertStudent(Request $req){
         $req->validate([
@@ -68,12 +68,9 @@ class RegistrationController extends Controller
         $student->applyfor=$applyfor;
         $student->eq1=$eq1;
         $student->r1=$r1;
-        $student->eq2=$eq2;
-        $student->r2=$r2;
-        $student->eq3=$eq3;
-        $student->r3=$r3;
+        $student->eq2=$r2;
+        $student->eq3=$r3;
         $student->eq4=$r4;
-        $student->r4=$r4;
         $student->cv=$cvfile_name;
         $student->image=$imagefile_name;
 
@@ -90,7 +87,43 @@ class RegistrationController extends Controller
     function insertUniversity(Request $req){
     
     }
-    function insertOrg(Request $req){
+    function insertOrganization(OrganizationRequest $req){
 
+
+        
+        $approvalfile_name="";
+        $informationfile_name="";
+        if($req->hasFile('approval') && $req->hasFile('information')){
+            $approval = $req->file('approval');
+            $information = $req->file('information');
+            $approvalfile_name= "approval_".$req->username."_".time().rand(100,999).".".$approval->getClientOriginalExtension();;
+            $informationfile_name = "information_".$req->username."_".time().rand(100,999).".".$information->getClientOriginalExtension();;
+            $approval->move('upload_Approval',$approvalfile_name);
+            $information->move('upload_Information',$informationfile_name);
+        }
+        
+        $organization=new Organization; 
+        $user=new User;
+        $organization->name=$req->name;
+        $organization->addressline=$req->addressline;
+        $organization->city=$req->city;
+        $organization->postal=$req->postal;
+        $organization->country=$req->country;
+        $organization->email=$req->email;
+        $organization->contact=$req->contact;
+        $organization->username=$req->username;
+        $organization->password=$req->password;     
+        $organization->approval=$approvalfile_name;
+        $organization->information=$informationfile_name;
+        $organization->description=$req->description;
+
+        $user->username=$req->username;
+        $user->password=$req->password;
+        $user->type=4;
+
+        if($organization->save() && $user->save())
+            return redirect()->route('login.index');
+        else
+            return redirect()->route('registration.organization');
     }
 }
