@@ -20,6 +20,5 @@ class VerifySession
         }else{
             return redirect()->route('login.index');
         }
-    
     }
 }
