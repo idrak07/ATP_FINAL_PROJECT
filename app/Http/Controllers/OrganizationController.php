@@ -302,7 +302,126 @@ public function massagetooffer(Request $request)
     }
      
  }
+   //offerDetails
+   public function offerDetails(Request $request,$id)
+{
+
+    $offer= Offer::find($id);
     
+     return view('offerorganization.offerdetails')->with('offer',$offer);
+     
+ } 
+
+ //view offer update
+ public function viewInfo(Request $request,$id)
+ {
+ 
+     $offer= Offer::find($id);
+     
+      return view('offerorganization.updateInfo')->with('offer',$offer);
+      
+  } 
+  public function viewDate(Request $request,$id)
+ {
+ 
+     $offer= Offer::find($id);
+     
+      return view('offerorganization.updateDate')->with('offer',$offer);
+      
+  } 
+  public function viewSeat(Request $request,$id)
+ {
+ 
+     $offer= Offer::find($id);
+     
+      return view('offerorganization.updateSeat')->with('offer',$offer);
+      
+  } 
+  //update offer
+  public function updateInfo(Request $request,$id)
+ {
+    $request->validate([
+        'title'=>'required',
+        'description'=>'required',
+        'degree'=>'required',   
+        'percentage'=>'required',
+        
+    ]);
+    $offer= Offer::find($id);
+     
+    $offer->title=$request->title;
+    $offer->description=$request->description;
+    $offer->degree=$request->degree;
+    $offer->percentage=$request->percentage;
+      if($offer->save())
+      {
+        return redirect()->route('offer.details',$offer->id); 
+      }
+      else{
+        return redirect()->route('offer.list'); 
+      }
+      
+  } 
+  public function updateDate(Request $request,$id)
+  {
+     $request->validate([
+        'startdate'=>'required|after:today',
+        'deadline'=>'required|after:startdate',
+         
+     ]);
+     $offer= Offer::find($id);
+      
+     $offer->startdate=$request->startdate;
+     $offer->deadline=$request->deadline;
+    
+       if($offer->save())
+       {
+         return redirect()->route('offer.details',$offer->id); 
+       }
+       else{
+         return redirect()->route('offer.list'); 
+       }
+       
+   } 
+   public function updateSeat(Request $request,$id)
+  {
+     $request->validate([
+        'seat'=>'required|numeric|int',
+         
+     ]);
+     $offer= Offer::find($id);
+      
+     $s=$request->seat;
+     $p=$offer->totalseat;
+     $total=$s+$p;
+
+    $offer->totalseat=$total;
+    if($p+$s<0)
+    {
+        return redirect()->route('offer.updateSeat',$offer->id); 
+    }
+       if($offer->save())
+       {
+         return redirect()->route('offer.details',$offer->id); 
+       }
+       else{
+         return redirect()->route('offer.list'); 
+       }
+       
+   } 
+   public function offerDelete(Request $request,$id)
+   {
+       $offer=Offer::find($id);
+       
+       if($offer->delete())
+       {
+        return redirect()->route('offer.list'); 
+       }
+       else{
+        return redirect()->route('offer.details',$offer->id);
+       }
+
+   }
     /**
      * Show the form for creating a new resource.
      *
