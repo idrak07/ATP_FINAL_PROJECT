@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Organization;
 use App\User;
+use App\Offer;
+use App\University;
 use Illuminate\Http\Request;
 
 class OrganizationController extends Controller
@@ -205,6 +207,62 @@ class OrganizationController extends Controller
     return redirect()->route('organization.profile');
         
     }
+    //offer index university show
+    public function offerindex(Request $request)
+    {
+        $name = University::all();
+
+        return view('offerorganization.index')->with('name',$name);
+     
+         
+     }
+     //post offer
+     public function offeradded(Request $request)
+    {
+        $request->validate([
+            'title'=>'required',
+            'description'=>'required',
+            'degree'=>'required',           
+            'startdate'=>'required|after:today',
+            'deadline'=>'required|after:startdate',
+            'percentage'=>'required',
+            'name'=>'required',
+            'totalseat'=>'required',
+            
+        ]);
+        $offer=new offer; 
+        $offer->organizationname=$request->session()->get('organizationname');
+        $offer->title=$request->title;
+        $offer->description=$request->description;
+        $offer->degree=$request->degree;
+        $offer->startdate=$request->startdate;
+        $offer->deadline=$request->deadline;
+        $offer->percentage=$request->percentage;
+        $offer->universityname=$request->name;
+        $offer->totalseat=$request->totalseat;
+       if($offer->save())
+       {
+        return redirect()->route('offer.massage');  
+       } 
+    else{
+        return redirect()->route('offer.index');
+    }
+    
+     
+         
+     }
+//massage offer
+public function massagetooffer(Request $request)
+{
+    return view('offerorganization.massageoffer');
+     
+ }
+ public function massagepostoffer(Request $request)
+{
+    return redirect()->route('organization.index');
+     
+ }
+
     
     /**
      * Show the form for creating a new resource.

@@ -15,10 +15,6 @@ class VerifyStudent
      */
     public function handle($request, Closure $next)
     {
-        if(session()->get('type')=='2'){
-            return $next($request);
-       }else{
-           return redirect()->route('login.index');
-       }
+        return $next($request);
     }
 }
