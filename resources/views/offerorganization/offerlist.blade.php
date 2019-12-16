@@ -47,7 +47,7 @@
 			<td>{{$s->id}}</td>
             <td>{{$s->organizationname}}</td>  
 			<td>{{$s->degree}}</td>
-			<td>{{$s->percentage}}</td>          
+			<td>{{$s->percentage}}%</td>          
             <td>{{$s->universityname}}</td>            
 			<td><a href="{{route('offer.details', $s->id)}}">Details</a></td>
 		</tr>

@@ -48,7 +48,7 @@
 			<td><?php echo e($s->id); ?></td>
             <td><?php echo e($s->organizationname); ?></td>  
 			<td><?php echo e($s->degree); ?></td>
-			<td><?php echo e($s->percentage); ?></td>          
+			<td><?php echo e($s->percentage); ?>%</td>          
             <td><?php echo e($s->universityname); ?></td>            
 			<td><a href="<?php echo e(route('offer.details', $s->id)); ?>">Details</a></td>
 		</tr>

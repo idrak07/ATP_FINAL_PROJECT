@@ -64,7 +64,15 @@ Route::group(['middleware'=>['session']], function(){
 //offer list
        Route::get('/organization/offerlist','OrganizationController@offerlist')->name('offer.list');
        Route::post('/organization/offerlist','OrganizationController@offerlistsearch');
-       Route::post('/organization/offer/details/{id}','OrganizationController@offerlist')->name('offer.details');
+       Route::get('/organization/offer/details/{id}','OrganizationController@offerDetails')->name('offer.details');
+       //update
+       Route::get('/organization/offer/update/information/{id}','OrganizationController@viewInfo')->name('offer.updateInfo');
+       Route::post('/organization/offer/update/information/{id}','OrganizationController@updateInfo');
+       Route::get('/organization/offer/update/date/{id}','OrganizationController@viewDate')->name('offer.updateDate');
+       Route::post('/organization/offer/update/date/{id}','OrganizationController@updateDate');
+       Route::get('/organization/offer/update/seat/{id}','OrganizationController@viewSeat')->name('offer.updateSeat');
+       Route::post('/organization/offer/update/seat/{id}','OrganizationController@updateSeat');
+       Route::get('/organization/offer/delte/{id}','OrganizationController@offerDelete')->name('offer.delete');
       
 
 

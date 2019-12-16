@@ -1,1 +1,1 @@
-a:6:{s:9:"_previous";a:1:{s:3:"url";s:44:"http://localhost:8000/organization/offerlist";}s:6:"_flash";a:2:{s:3:"old";a:0:{}s:3:"new";a:0:{}}s:6:"_token";s:40:"8b4HaVnImVjp71uYrMxBMDZHLcXBByO37mKPwEgP";s:8:"username";s:4:"leon";s:4:"type";s:1:"4";s:16:"organizationname";s:11:"Leon Sarker";}
+a:6:{s:9:"_previous";a:1:{s:3:"url";s:34:"http://localhost:8000/organization";}s:6:"_flash";a:2:{s:3:"old";a:0:{}s:3:"new";a:0:{}}s:6:"_token";s:40:"8b4HaVnImVjp71uYrMxBMDZHLcXBByO37mKPwEgP";s:8:"username";s:4:"leon";s:4:"type";s:1:"4";s:16:"organizationname";s:11:"Leon Sarker";}
