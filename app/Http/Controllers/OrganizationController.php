@@ -262,7 +262,46 @@ public function massagetooffer(Request $request)
     return redirect()->route('organization.index');
      
  }
+ //offer list
 
+ public function offerlist(Request $request)
+{
+
+    $offer= Offer::where('organizationname',$request->session()->get('organizationname'))->get();
+    
+     return view('offerorganization.offerlist')->with('offer',$offer);
+     
+ }
+ //search
+ public function offerlistsearch(Request $request)
+{
+
+    $id= Offer::where('id',$request->search)->get();
+    $university= Offer::where('universityname',$request->search)->get();
+    $degree= Offer::where('degree',$request->search)->get();
+    $percentage= Offer::where('percentage',$request->search)->get();
+   
+    if(count($id)>0)
+    {
+        return view('offerorganization.offerlist')->with('offer',$id);
+    }
+   elseif(count($degree)>0)
+   {
+    return view('offerorganization.offerlist')->with('offer',$degree);
+   }
+   elseif(count($university)>0)
+   {
+    return view('offerorganization.offerlist')->with('offer',$university);
+   }
+   elseif(count($percentage)>0)
+   {
+    return view('offerorganization.offerlist')->with('offer',$percentage);
+   }
+    else{
+        return redirect()->route('offer.list'); 
+    }
+     
+ }
     
     /**
      * Show the form for creating a new resource.
