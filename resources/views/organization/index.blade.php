@@ -36,6 +36,11 @@
         <div class="topnav">
          <a class="active" href="{{route('organization.index')}}">Home</a>
          <a class="active" href="{{route('organization.profile')}}">{{session('organizationname')}}</a>
+         <a class="active" href="{{route('offer.index')}}">Offer Scholarship</a>
+         <a class="active" href="{{route('offer.index')}}">Offer List</a>
+         <a class="active" href="{{route('offer.index')}}">Student Appllication</a>
+         <a class="active" href="{{route('offer.index')}}">University</a>
+         <a class="active" href="{{route('offer.index')}}">Contact</a>
             <a href="{{route('logout')}}">Logout</a>
         </div>
     </body>

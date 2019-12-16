@@ -8,7 +8,7 @@
         <div class="topnav">
         
             
-            <a href="<?php echo e(route('logout')); ?>"><b>Logout</b></a>
+           
         </div>
 <center>
         <table border="2"  width="450" height="600">
@@ -21,6 +21,7 @@
                     </center>
                     
                     </br></td>
+                    <a href="<?php echo e(route('logout')); ?>"><b>Logout</b></a>
                 
             </tr>
 

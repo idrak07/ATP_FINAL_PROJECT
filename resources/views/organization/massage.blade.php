@@ -11,12 +11,14 @@
 	<form method="post" >
 	<input type="hidden" name="_token" value="{{csrf_token()}}">
     <center>
-	<table border="2" height="200" width="150">
+	<table border="2" height="150" width="200">
     <tr>
                  <td colspan="2">
                  <br><center>
                  <b>
                    Please Remember Password!
+                    Your Password Change
+                        Successful!
                     </b>
                     </center>
                     

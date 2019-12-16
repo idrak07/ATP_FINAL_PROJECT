@@ -9,15 +9,15 @@
 	  
 	
 	<form method="post" >
-	<input type="hidden" name="_token" value="<?php echo e(csrf_token()); ?>">
+	<input type="hidden" name="_token" value="{{csrf_token()}}">
     <center>
 	<table border="2" height="150" width="200">
     <tr>
                  <td colspan="2">
                  <br><center>
                  <b>
-                   Please Remember Password!
-                    Your Password Change
+                   Please Go Offer List!
+                         Offer Add
                         Successful!
                     </b>
                     </center>
@@ -44,4 +44,4 @@
 </form>
 
 </body>
-</html><?php /**PATH C:\Users\Asus\Desktop\Scholarship\resources\views/organization/massage.blade.php ENDPATH**/ ?>
+</html>

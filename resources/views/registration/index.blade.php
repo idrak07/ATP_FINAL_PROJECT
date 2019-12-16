@@ -10,9 +10,5 @@
             <li><a href="registration/university">University Authority</a></li>
             <li><a href="registration/organization">Organization</a></li>
         </ul>
-        <p>
-            Already Have an Account !<br/>
-            <a href="/login">Click Here</a> To Log In
-        </p>
     </body>
 </html>

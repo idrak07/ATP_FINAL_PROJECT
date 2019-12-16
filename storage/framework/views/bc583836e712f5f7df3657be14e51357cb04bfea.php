@@ -16,8 +16,8 @@
                  <td colspan="2">
                  <br><center>
                  <b>
-                   Please Remember Password!
-                    Your Password Change
+                   Please Go Offer List!
+                         Offer Add
                         Successful!
                     </b>
                     </center>
@@ -44,4 +44,4 @@
 </form>
 
 </body>
-</html><?php /**PATH C:\Users\Asus\Desktop\Scholarship\resources\views/organization/massage.blade.php ENDPATH**/ ?>
+</html><?php /**PATH C:\Users\Asus\Desktop\Scholarship\resources\views/offerorganization/massageoffer.blade.php ENDPATH**/ ?>
