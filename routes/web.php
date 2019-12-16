@@ -53,19 +53,19 @@ Route::group(['middleware'=>['session']], function(){
        Route::get('/organization/update/profile/newpassword','OrganizationController@confirmpassword')->name('organization.confirm');
        Route::post('/organization/update/profile/newpassword','OrganizationController@confirmpasswordpost');
        //massageshow
-
        Route::get('/organization/update/profile/massage','OrganizationController@massage')->name('organization.massage');
        Route::post('/organization/update/profile/massage','OrganizationController@massagebackprofile');
-
-       //offer from show and add
-
+  //offer from show and add
        Route::get('/organization/offer','OrganizationController@offerindex')->name('offer.index');
        Route::post('/organization/offer','OrganizationController@offeradded');
        //massage offer
        Route::get('/organization/offer/massage','OrganizationController@massagetooffer')->name('offer.massage');
        Route::post('/organization/offer/massage','OrganizationController@massagepostoffer');
-
-      // Route::get('/organization/profile','OrganizationController@profile')->name('organization.profile');
+//offer list
+       Route::get('/organization/offerlist','OrganizationController@offerlist')->name('offer.list');
+       Route::post('/organization/offerlist','OrganizationController@offerlistsearch');
+       Route::post('/organization/offer/details/{id}','OrganizationController@offerlist')->name('offer.details');
+      
 
 
     });

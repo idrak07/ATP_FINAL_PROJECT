@@ -4,7 +4,7 @@
 	<title>attachment update page</title>
 </head>
 <body>
-   <a href="/logout"><b>Logout</br></a>
+   
 	<h1><center> Update  Attachment Information</center></h1>
 	  
 	
