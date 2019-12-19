@@ -6,6 +6,9 @@ use App\Organization;
 use App\User;
 use App\Offer;
 use App\University;
+use App\Application;
+use App\Student;
+use App\Approve;
 use Illuminate\Http\Request;
 
 class OrganizationController extends Controller
@@ -49,7 +52,7 @@ class OrganizationController extends Controller
 
 
 
-    //update organization database
+    //update personal organization database
 
     public function updatepersonal(Request $request)
     {
@@ -65,20 +68,23 @@ class OrganizationController extends Controller
        
         $organization=Organization::where('username', $request->session()->get('username'))->first();
         $user=User::where('username', $request->session()->get('username'))->first();
+        //$offer=Offer::where('organizationname', $request->session()->get('organizationname'))->first();
         
         $organization->name =$request->name;
-     
         $organization->email = $request->email;
         $organization->contact = $request->contact;
         $organization->username = $request->username;
+
         $user->username=$request->username;
+        //$offer->organizationname=$request->name;
         
         if($user->save() && $organization->save())
         {
             $request->session()->put('username', $request->input('username'));
+
+            //organization name change
             $organization=Organization::where('username',$request->username)->first();
-			
-				$request->session()->put('organizationname', $organization->name);
+			$request->session()->put('organizationname', $organization->name);
             return redirect()->route('organization.profile');
         }
         else{
@@ -161,6 +167,7 @@ class OrganizationController extends Controller
             return redirect()->route('organization.confirm');
         }
         else{
+            $request->session()->flash('pass', 'Opps!!Old password does not match.');
             return view('organization.password');
         }
         
@@ -207,7 +214,7 @@ class OrganizationController extends Controller
     return redirect()->route('organization.profile');
         
     }
-    //offer index university show
+    //offer all university show
     public function offerindex(Request $request)
     {
         $name = University::all();
@@ -272,14 +279,18 @@ public function massagetooffer(Request $request)
      return view('offerorganization.offerlist')->with('offer',$offer);
      
  }
- //search
+ //search offer list
  public function offerlistsearch(Request $request)
 {
 
-    $id= Offer::where('id',$request->search)->get();
-    $university= Offer::where('universityname',$request->search)->get();
-    $degree= Offer::where('degree',$request->search)->get();
-    $percentage= Offer::where('percentage',$request->search)->get();
+    $id= Offer::where('id',$request->search)
+    ->where('organizationname', $request->session()->get('organizationname')) ->get();
+    $university= Offer::where('universityname',$request->search)
+    ->where('organizationname', $request->session()->get('organizationname')) ->get();
+    $degree= Offer::where('degree',$request->search)
+    ->where('organizationname', $request->session()->get('organizationname')) ->get();
+    $percentage= Offer::where('percentage',$request->search)
+    ->where('organizationname', $request->session()->get('organizationname')) ->get();
    
     if(count($id)>0)
     {
@@ -398,6 +409,7 @@ public function massagetooffer(Request $request)
     $offer->totalseat=$total;
     if($p+$s<0)
     {
+        $request->session()->flash('msg', 'Number of seat can not negative number');
         return redirect()->route('offer.updateSeat',$offer->id); 
     }
        if($offer->save())
@@ -422,14 +434,26 @@ public function massagetooffer(Request $request)
        }
 
    }
+   //student pending application
+   public function pendingApplication(Request $request)
+   {
+       
+      $application=Application::Where('orgname',$request->session()->get('organizationname'))
+                             ->Where('status',0)->get();
+      return view('organization.studentapplication')->with('application',$application);
+   }
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    //student profile
+    public function studentProfile(Request $request,$id)
     {
-        //
+       $application=Application::find($id);
+       $student=Student::where('username',$application->appliedby)->first();
+       //dd($student);
+       return view('organization.studentprofile')->with('student',$student);
     }
 
     /**
@@ -438,9 +462,53 @@ public function massagetooffer(Request $request)
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    //approve for student
+    public function viewApproveApplication(Request $request,$id)
     {
-        //
+       $application=Application::find($id);
+       $student=Student::where('username',$application->appliedby)->first();
+       $application->status=1;
+       $approve= new Approve;
+       $approve->apId=$application->id;
+       $approve->orgName=$request->session()->get('organizationname');
+       $approve->title=$application->title; 
+       $approve->studentname=$application->studentname; 
+       $approve->studentusername=$application->appliedby; 
+       $approve->university=$application->university;
+       $offer=Offer::where('universityname',$application->university)
+                  ->where('organizationname',$request->session()->get('organizationname')) 
+                  ->where('degree',$student->applyfor)->first();
+                  if($offer==null)
+                  {
+                    return redirect()->route('no.seat');
+                  }
+       $offer->totalseat=$offer->totalseat-1;
+       if( $offer->totalseat>=0)
+       {
+        if($approve->save()&& $application->save()&& $offer->save())
+        {
+          return redirect()->route('available.seat',$offer->id); 
+        } 
+        else{
+          return redirect()->route('orgstudent.application'); 
+        }
+
+       }
+    else{
+        return redirect()->route('no.seat');
+       
+    }
+      
+            
+    }
+    //no seat
+    public function  noseat(Request $request)
+    {
+        return view('organization.noseat');
+    }
+    public function noseatpost(Request $request)
+    {
+        return redirect()->route('orgstudent.application');
     }
 
     /**
@@ -449,9 +517,18 @@ public function massagetooffer(Request $request)
      * @param  \App\Organization  $organization
      * @return \Illuminate\Http\Response
      */
-    public function show(Organization $organization)
+    //rejected
+    public function viewRejectApplication(Request $request,$id)
     {
-        //
+        $application=Application::find($id);
+        $application->status=2;
+        if($application->save())
+        {
+          return redirect()->route('orgstudent.application'); 
+        } 
+        else{
+          return redirect()->route('orgstudent.application'); 
+        }
     }
 
     /**
@@ -460,9 +537,11 @@ public function massagetooffer(Request $request)
      * @param  \App\Organization  $organization
      * @return \Illuminate\Http\Response
      */
-    public function edit(Organization $organization)
+    //approved list
+    public function approveliststudent(Request $request)
     {
-        //
+         $approve=Approve::where('orgName',$request->session()->get('organizationname'))->get();
+         return view('organization.approvestudent')->with('approve',$approve);
     }
 
     /**
@@ -472,9 +551,11 @@ public function massagetooffer(Request $request)
      * @param  \App\Organization  $organization
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Organization $organization)
+    public function approvedelete(Request $request,$id)
     {
-        //
+       $approve=Approve::find($id);
+       $approve->delete();
+       return redirect()->route('approve.list'); 
     }
 
     /**
@@ -483,8 +564,15 @@ public function massagetooffer(Request $request)
      * @param  \App\Organization  $organization
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Organization $organization)
+    //massage approve total seat
+    public function availableseat(Request $request,$id)
     {
-        //
+        $offer=Offer::find($id);
+        return view('organization.approveseatavailable')->with('offer',$offer);
+    }
+    public function redirectApprovelist(Request $request,$id)
+    {
+        
+        return redirect()->route('approve.list'); 
     }
 }
